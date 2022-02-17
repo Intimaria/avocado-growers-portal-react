@@ -7,7 +7,17 @@ export default function App() {
 
 
   const [currentAccount, setCurrentAccount] = useState("");
-  const [paltas, setPaltas] = useState();
+  const [avoCount, setAvoCount] = useState(0);
+  const [wish, setWish] = useState("");
+  const [allAvos, setAllAvos] = useState([]);
+  const contractAddress = "0xe049Ea272c0C93604233F82B35F3F7b801C48859"
+  const contractABI = abi.abi;
+
+
+  const handlePalta = event => {
+    setWish( event.target.value )
+  }
+  
 
   const getCount = async () => {
     try {
@@ -21,7 +31,7 @@ export default function App() {
         let count = await avoPortalContract.getTotalAvos();
         console.log("Encontramos un numero de paltitas...", count.toNumber());
         count = await avoPortalContract.getTotalAvos();
-        setPaltas(count.toNumber());
+        setAvoCount(count.toNumber());
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -29,16 +39,9 @@ export default function App() {
       console.log(error);
     }
   }
-  const [allAvos, setAllAvos] = useState([]);
-  const contractAddress = "0xe049Ea272c0C93604233F82B35F3F7b801C48859"
-  const contractABI = abi.abi;
 
-  const [wish, setWish] = useState("");
 
-  const handlePalta = event => {
-    setWish( event.target.value )
-  }
-  
+
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -95,7 +98,7 @@ export default function App() {
 
   useEffect(() => {
     getCount();
-  }, [paltas])
+  }, [avoCount])
 
   useEffect(() => {
     getAllAvos();
@@ -124,7 +127,7 @@ export default function App() {
 
         count = await avoPortalContract.getTotalAvos();
         console.log("Encontramos un numero de paltitas...", count.toNumber());
-        setPaltas(count.toNumber());
+        setAvoCount(count.toNumber());
         setWish("")
       } else {
         console.log("Ethereum object doesn't exist!");
@@ -178,7 +181,7 @@ const getAllAvos = async () => {
 
         {currentAccount ? (
         <div className="count">
-          Tus <span role="img" aria-label="plant">🌱</span> son {paltas}
+          Tus <span role="img" aria-label="plant">🌱</span> son {avoCount}
         </div>)
         :
         (<div className="count">
@@ -191,16 +194,16 @@ const getAllAvos = async () => {
           <button className="growButton" onClick={grow}>
             Crece una paltita  <span role="img" aria-label="plant">🌱</span>
           </button>
-        </div>
 
-        {/*
-        * If there is no currentAccount render this button
-        */}
-        {!currentAccount && (
+          {!currentAccount && (
           <button className="growButton" onClick={connectWallet}>
             Conecta tu Billetera
           </button>
         )}
+        
+        </div>
+
+
         
       </div>
 
@@ -230,7 +233,7 @@ const getAllAvos = async () => {
                 </div>)
             })}
           </div>
-          <div style={{padding: "20px"}}>
+          <div style={{padding: "8px"}}>
 
           </div>
 
