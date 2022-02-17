@@ -7,6 +7,28 @@ export default function App() {
 
 
   const [currentAccount, setCurrentAccount] = useState("");
+  const [paltas, setPaltas] = useState();
+
+  const getCount = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const avoPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let count = await avoPortalContract.getTotalAvos();
+        console.log("Encontramos un numero de paltitas...", count.toNumber());
+        count = await avoPortalContract.getTotalAvos();
+        setPaltas(count.toNumber());
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const contractAddress = "0x3C7ea6b5007c2dde9F0f488d340Ef369bfB3065C"
   const contractABI = abi.abi;
@@ -61,6 +83,9 @@ export default function App() {
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [])
+  useEffect(() => {
+    getCount();
+  }, [])
 
   const grow = async () => {
     try {
@@ -74,7 +99,6 @@ export default function App() {
         let count = await avoPortalContract.getTotalAvos();
         console.log("Encontramos un numero de paltitas...", count.toNumber());
 
-
         /*
         * Execute the actual avo from your smart contract
         */
@@ -86,6 +110,7 @@ export default function App() {
 
         count = await avoPortalContract.getTotalAvos();
         console.log("Encontramos un numero de paltitas...", count.toNumber());
+        setPaltas(count.toNumber());
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -106,15 +131,20 @@ export default function App() {
         Soy Inti y me gusta crecer paltas. Si tambien te gustaría, conecta tu billetera Ethereum y crece tu propia paltita conmigo!
         </div>
 
+        <div className="count">
+          <span role="img" aria-label="plant">🌱 = {paltas}</span>
+        </div>
+
         <button className="growButton" onClick={grow}>
           Crece una paltita  <span role="img" aria-label="plant">🌱</span>
         </button>
-        <span></span>
+        
+
         {/*
         * If there is no currentAccount render this button
         */}
         {!currentAccount && (
-          <button className="avoButton" onClick={connectWallet}>
+          <button className="growButton" onClick={connectWallet}>
             Connect Wallet
           </button>
         )}

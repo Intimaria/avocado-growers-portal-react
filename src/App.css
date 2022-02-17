@@ -24,6 +24,12 @@
   margin-top: 16px;
 }
 
+.count {
+  text-align: center;
+  color: gray;
+  margin-top: 16px;
+}
+
 .growButton {
   cursor: pointer;
   margin-top: 16px;
