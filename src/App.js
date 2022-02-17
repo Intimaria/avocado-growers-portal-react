@@ -131,9 +131,15 @@ export default function App() {
         Soy Inti y me gusta crecer paltas. Si tambien te gustaría, conecta tu billetera Ethereum y crece tu propia paltita conmigo!
         </div>
 
+        {paltas ? (
         <div className="count">
-          <span role="img" aria-label="plant">🌱 = {paltas}</span>
+          <span role="img" aria-label="plant">🌱</span> = {paltas}
         </div>
+        :
+        <div className="count">
+          Conectate para ver tus <span role="img" aria-label="plant">🌱</span>
+        </div>
+        )}
 
         <button className="growButton" onClick={grow}>
           Crece una paltita  <span role="img" aria-label="plant">🌱</span>
