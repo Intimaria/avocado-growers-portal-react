@@ -54,3 +54,11 @@
   border-radius: 5px;
   
 }
+
+.wishList {
+  background-color: light-green;
+  margin-top: 16px;
+  padding: 8px;
+  justify-content: center;
+  color: white;
+}

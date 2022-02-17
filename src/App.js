@@ -95,11 +95,11 @@ export default function App() {
 
   useEffect(() => {
     getCount();
-  }, [])
+  }, [paltas])
 
   useEffect(() => {
     getAllAvos();
-  }, [])
+  }, [allAvos])
 
   const grow = async () => {
     try {
@@ -146,7 +146,7 @@ const getAllAvos = async () => {
 
       let avosCleaned = [];
       avos.forEach(avo => {
-        avosCleaned.push({
+        avosCleaned.unshift({
           address: avo.grower,
           timestamp: new Date(avo.timestamp * 1000),
           wish: avo.wish
@@ -217,15 +217,15 @@ const getAllAvos = async () => {
                     justifyContent: "center",
                     color: "white"}}>
                   <div>Direccion: {avo.address}</div>
-                  <div>Hora: {
-                  Intl.DateTimeFormat('en-US', 
-                  {year: 'numeric', 
-                  month: '2-digit', 
-                  day: '2-digit', 
-                  hour: '2-digit', 
-                  minute: '2-digit', 
-                  second: '2-digit'})
-                  .format(avo.timestamp)}</div>
+                  <div>Hora: { Intl.DateTimeFormat('en-US', {
+                                      year: 'numeric', 
+                                      month: '2-digit', 
+                                      day: '2-digit', 
+                                      hour: '2-digit', 
+                                      minute: '2-digit', 
+                                      second: '2-digit'
+                    }).format(avo.timestamp)}
+                  </div>
                   <div>Deseo: {avo.wish}</div>
                 </div>)
             })}
