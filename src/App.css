@@ -12,10 +12,26 @@
   max-width: 600px;
 }
 
+.wishContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 4px dotted pink; 
+  width: 100%;
+  margin-top: 16px;
+  padding: 30px;
+}
+
 .header {
   text-align: center;
   font-size: 32px;
   font-weight: 600;
+}
+
+.wish {
+  margin-top: 16px;
+  padding: 8px;
+  cursor:default;
 }
 
 .bio {
