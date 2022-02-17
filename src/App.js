@@ -83,6 +83,7 @@ export default function App() {
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [])
+
   useEffect(() => {
     getCount();
   }, [])
@@ -131,12 +132,12 @@ export default function App() {
         Soy Inti y me gusta crecer paltas. Si tambien te gustaría, conecta tu billetera Ethereum y crece tu propia paltita conmigo!
         </div>
 
-        {paltas ? (
+        {currentAccount ? (
         <div className="count">
           <span role="img" aria-label="plant">🌱</span> = {paltas}
-        </div>
+        </div>)
         :
-        <div className="count">
+        (<div className="count">
           Conectate para ver tus <span role="img" aria-label="plant">🌱</span>
         </div>
         )}
@@ -151,7 +152,7 @@ export default function App() {
         */}
         {!currentAccount && (
           <button className="growButton" onClick={connectWallet}>
-            Connect Wallet
+            Conecta tu Billetera
           </button>
         )}
       </div>
