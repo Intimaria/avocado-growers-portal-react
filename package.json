@@ -1,5 +1,5 @@
 {
-  "name": "creap",
+  "name": "avocado",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -31,5 +31,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "### **Welcome!** To get started with this course, clone this repo and follow these commands:",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Intimaria/avocado-growers-portal-react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Intimaria/avocado-growers-portal-react/issues"
+  },
+  "homepage": "https://github.com/Intimaria/avocado-growers-portal-react#readme"
 }

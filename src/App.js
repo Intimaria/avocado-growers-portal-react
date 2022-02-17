@@ -13,7 +13,7 @@ export default function App() {
 
       <div className="dataContainer">
         <div className="header">
-         Hola! 🥑🌱
+         Hola! <span role="img" aria-label="avocado">🥑</span><span role="img"  aria-label="plant">🌱</span>
         </div>
 
         <div className="bio">
@@ -21,7 +21,7 @@ export default function App() {
         </div>
 
         <button className="waveButton" onClick={grow}>
-          Crece una paltita 🥑🌱
+          Crece una paltita  <span role="img" aria-label="plant">🌱</span>
         </button>
       </div>
     </div>
