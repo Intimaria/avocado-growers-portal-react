@@ -1,2 +1,15 @@
 node_modules
 .DS_Store
+
+*/.env
+.env
+
+coverage
+coverage.json
+typechain
+
+#Hardhat files
+*/cache
+*/artifacts
+cache
+artifacts

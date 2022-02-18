@@ -10,7 +10,7 @@ export default function App() {
   const [avoCount, setAvoCount] = useState(0);
   const [wish, setWish] = useState("");
   const [allAvos, setAllAvos] = useState([]);
-  const contractAddress = "0x4277CF10A9809AA6f42d1F34E31833A535aABBF7"
+  const contractAddress = "0xE549e4D7d5736Ca324Ff2DC19B577d7D5BEB03c1"
   const contractABI = abi.abi;
 
 
