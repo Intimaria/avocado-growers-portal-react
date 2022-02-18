@@ -119,7 +119,7 @@ export default function App() {
         /*
         * Execute the actual avo from your smart contract
         */
-        const avoTxn = await avoPortalContract.grow(wish);
+        const avoTxn = await avoPortalContract.grow(wish, { gasLimit: 300000 });
         console.log("Mining...", avoTxn.hash);
 
         await avoTxn.wait();
@@ -140,11 +140,11 @@ export default function App() {
 const getAllAvos = async () => {
   try {
     const { ethereum } = window;
+
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       const avoPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
       const avos = await avoPortalContract.getAllAvos();
 
       let avosCleaned = [];
@@ -164,7 +164,38 @@ const getAllAvos = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+
+useEffect(() => {
+  let avoPortalContract;
+
+  const onNewAvo = (from, timestamp, wish) => {
+    console.log("NewAvo", from, timestamp, wish);
+    setAllAvos(prevState => [
+      ...prevState,
+      {
+        address: from,
+        timestamp: new Date(timestamp * 1000),
+        wish: wish,
+      },
+    ]);
+  };
+
+  if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    
+    avoPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+    avoPortalContract.on("NewAvo", onNewAvo);
+  }
+
+  return () => {
+    if (avoPortalContract) {
+      avoPortalContract.off("NewAvo", onNewAvo);
+    }
+  };
+}, []);
 
 
   return (
@@ -179,16 +210,6 @@ const getAllAvos = async () => {
         Soy Inti y me gusta crecer paltas. Si tambien te gustaría, conecta tu billetera Ethereum y crece tu propia paltita conmigo!
         </div>
 
-        {currentAccount ? (
-        <div className="count">
-          Tus <span role="img" aria-label="plant">🌱</span> son {avoCount}
-        </div>)
-        :
-        (<div className="count">
-          Conectate para ver tus <span role="img" aria-label="plant">🌱</span>
-        </div>
-        )}
-
         <div className="bio">
           <input className="wish" placeholder="Pedi tu deseo :)" onChange={handlePalta}></input>
           <button className="growButton" onClick={grow}>
@@ -200,11 +221,21 @@ const getAllAvos = async () => {
             Conecta tu Billetera
           </button>
         )}
+
+        {currentAccount ? (
+        <div className="count">
+          {[...Array(avoCount)].map((e, i) => 
+              <span role="img" aria-label="plant">🌱</span>
+              )}
+        </div>)
+        :
+        (<div className="count">
+          Conectate para ver tus <span role="img" aria-label="plant">🌱</span>
+        </div>
+        )}
         
         </div>
-
-
-        
+      {/* split screen here */}
       </div>
 
       <div className="wishContainer"> 
